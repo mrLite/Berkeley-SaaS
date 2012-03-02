@@ -19,6 +19,21 @@ def rps_game_winner(game)
   end
 end
 
-def rps_tournament_winner(t)
-  
+def flatten_tournament(t)
+  t.flatten!
+  ret = []
+  while t.size > 0
+    ret << t.slice!(0..1)
+  end
+  ret
+end
+
+def rps_tournament_winner(tournament)
+  tournament = flatten_tournament(tournament)
+  return tournament[0] if tournament.size == 1
+  t = []
+  while tournament.size > 0
+    t << rps_game_winner(tournament.slice!(0..1))
+  end
+  rps_tournament_winner(t)
 end
