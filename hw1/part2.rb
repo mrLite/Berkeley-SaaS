@@ -29,11 +29,14 @@ def flatten_tournament(t)
 end
 
 def rps_tournament_winner(tournament)
-  tournament = flatten_tournament(tournament)
-  return tournament[0] if tournament.size == 1
+  t_copy = tournament
   t = []
-  while tournament.size > 0
-    t << rps_game_winner(tournament.slice!(0..1))
+  while t_copy.size > 0
+    t_copy = flatten_tournament(t_copy)
+    return t_copy[0] if t_copy.size == 1
+    while t_copy.size > 0
+      t << rps_game_winner(t_copy.slice!(0..1))
+    end
+    t_copy = t
   end
-  rps_tournament_winner(t)
 end
