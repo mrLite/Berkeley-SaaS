@@ -22,21 +22,16 @@ end
 def flatten_tournament(t)
   t.flatten!
   ret = []
-  while t.size > 0
-    ret << t.slice!(0..1)
-  end
+  ret << t.slice!(0..1) until t.empty?
   ret
 end
 
 def rps_tournament_winner(tournament)
-  t_copy = tournament
   t = []
-  while t_copy.size > 0
-    t_copy = flatten_tournament(t_copy)
-    return t_copy[0] if t_copy.size == 1
-    while t_copy.size > 0
-      t << rps_game_winner(t_copy.slice!(0..1))
-    end
-    t_copy = t
+  while tournament.size > 0
+    tournament = flatten_tournament(tournament)
+    return tournament[0] if tournament.size == 1
+    t << rps_game_winner(tournament.slice!(0..1)) until tournament.empty?
+    tournament = t
   end
 end
